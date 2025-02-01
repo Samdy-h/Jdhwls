@@ -10,7 +10,7 @@ pero para lograrlo necesitarán primero adquirir la llave de la salida de emerge
 
 Cómo ejcutar el proyecto:
 -clonar el proyecto en su dispositivo 
--abrir la carperta "MazeBoom"
+-abrir la carperta "b"
 -abrir la carpeta "bin" 
 -abrir a carpeta "debug"
 -arir la carpeta "net8.0"
