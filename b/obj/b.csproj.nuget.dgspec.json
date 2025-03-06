@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Heidy escuela\\proyectos\\prubeba11\\b\\b.csproj": {}
+    "C:\\Users\\Samir\\Documents\\Heidy escuela\\proyectos\\Nueva carpeta\\Jdhwls\\b\\b.csproj": {}
   },
   "projects": {
-    "D:\\Heidy escuela\\proyectos\\prubeba11\\b\\b.csproj": {
+    "C:\\Users\\Samir\\Documents\\Heidy escuela\\proyectos\\Nueva carpeta\\Jdhwls\\b\\b.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Heidy escuela\\proyectos\\prubeba11\\b\\b.csproj",
+        "projectUniqueName": "C:\\Users\\Samir\\Documents\\Heidy escuela\\proyectos\\Nueva carpeta\\Jdhwls\\b\\b.csproj",
         "projectName": "b",
-        "projectPath": "D:\\Heidy escuela\\proyectos\\prubeba11\\b\\b.csproj",
-        "packagesPath": "C:\\Users\\Yoli\\.nuget\\packages\\",
-        "outputPath": "D:\\Heidy escuela\\proyectos\\prubeba11\\b\\obj\\",
+        "projectPath": "C:\\Users\\Samir\\Documents\\Heidy escuela\\proyectos\\Nueva carpeta\\Jdhwls\\b\\b.csproj",
+        "packagesPath": "C:\\Users\\Samir\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Samir\\Documents\\Heidy escuela\\proyectos\\Nueva carpeta\\Jdhwls\\b\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Yoli\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Samir\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"

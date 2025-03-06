@@ -86,3 +86,26 @@ d:\Heidy escuela\proyectos\prubeba11\b\obj\Debug\net8.0\refint\b.dll
 d:\Heidy escuela\proyectos\prubeba11\b\obj\Debug\net8.0\b.pdb
 D:\Heidy escuela\proyectos\prubeba11\b\obj\Debug\net8.0\b.genruntimeconfig.cache
 D:\Heidy escuela\proyectos\prubeba11\b\obj\Debug\net8.0\ref\b.dll
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\bin\Debug\net8.0\b.exe
+C:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\bin\Debug\net8.0\b.deps.json
+C:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\bin\Debug\net8.0\b.runtimeconfig.json
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\bin\Debug\net8.0\b.dll
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\bin\Debug\net8.0\b.pdb
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\bin\Debug\net8.0\Figgle.dll
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\bin\Debug\net8.0\Spectre.Console.dll
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\bin\Debug\net8.0\Spectre.Console.Cli.dll
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\bin\Debug\net8.0\de\Spectre.Console.Cli.resources.dll
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\bin\Debug\net8.0\fr\Spectre.Console.Cli.resources.dll
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\bin\Debug\net8.0\sv\Spectre.Console.Cli.resources.dll
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\obj\Debug\net8.0\b.csproj.AssemblyReference.cache
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\obj\Debug\net8.0\b.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\obj\Debug\net8.0\b.AssemblyInfoInputs.cache
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\obj\Debug\net8.0\b.AssemblyInfo.cs
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\obj\Debug\net8.0\b.csproj.CoreCompileInputs.cache
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\obj\Debug\net8.0\b.sourcelink.json
+C:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\obj\Debug\net8.0\b.csproj.Up2Date
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\obj\Debug\net8.0\b.dll
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\obj\Debug\net8.0\refint\b.dll
+c:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\obj\Debug\net8.0\b.pdb
+C:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\obj\Debug\net8.0\b.genruntimeconfig.cache
+C:\Users\Samir\Documents\Heidy escuela\proyectos\Nueva carpeta\Jdhwls\b\obj\Debug\net8.0\ref\b.dll

@@ -5,7 +5,7 @@ partial class Maze
     // Clase Juego que contiene la lógica del juego
     class Juego
     {
-        private static readonly Random rnd = new Random(); // Generador de números aleatorios
+        private static readonly Random rnd = new Random(); 
         public List<Personaje> Jugadores { get; set; }
         public Casilla[,] Laberinto { get; set; }
         private (int x, int y) Meta { get; set; }
@@ -14,7 +14,20 @@ partial class Maze
         {
             Jugadores = jugadores;
             Laberinto = laberinto;
-            Meta = (laberinto.GetLength(0) - 1, laberinto.GetLength(1) - 2); // Definir la meta en la casilla (32, 31)
+            Meta = (laberinto.GetLength(0) - 1, laberinto.GetLength(1) - 2); // Definir la meta
+        }
+
+        void ActualizarEnfriamiento(Personaje jugador)
+        {
+            if (!jugador.HabilidadDisponible && jugador.TiempoEnfriamiento>0)
+            {
+                jugador.TiempoEnfriamiento--;
+                if(jugador.TiempoEnfriamiento==0)
+                {
+                    jugador.HabilidadDisponible = true;
+                    AnsiConsole.Write(new Markup($"[green]¡La habilidad de {jugador.Nombre} está disponible nuevamente![/]\n"));
+                }
+            }
         }
 
         // Función para iniciar el juego
@@ -29,16 +42,8 @@ partial class Maze
                     // Mostrar estado del jugador
                     MostrarEstadoJugador(jugador);
 
-                    // Gestionar enfriamiento de la habilidad
-                    if (!jugador.HabilidadDisponible && jugador.TiempoEnfriamiento > 0)
-                    {
-                        jugador.TiempoEnfriamiento--;
-                        if (jugador.TiempoEnfriamiento == 0)
-                        {
-                            jugador.HabilidadDisponible = true;
-                            AnsiConsole.Write(new Markup($"[green]¡La habilidad de {jugador.Nombre} está disponible nuevamente![/]\n"));
-                        }
-                    }
+                    //Actualizar el enfriamiento
+                    ActualizarEnfriamiento(jugador);
 
                     // Verificar si el jugador está en un estado de "Turnos Sin Jugar"
                     if (jugador.TurnosSinJugar > 0)
@@ -223,9 +228,6 @@ void MostrarOpcionesJugador(Personaje jugador)
                 case "Boo":
                     Boo(jugador);
                     break;
-                default:
-                    AnsiConsole.Write(new Markup("[red]Habilidad desconocida![/]\n"));
-                    break;
             }
 
             jugador.HabilidadDisponible = false;
@@ -233,76 +235,30 @@ void MostrarOpcionesJugador(Personaje jugador)
         // Método para la habilidad Sabotaje del ingeniero
 void Sabotaje(Personaje jugador)
 {
-    int dx = 0, dy = 0;
-
-    while (true)
+    if(!jugador.HabilidadDisponible)
     {
+        AnsiConsole.Write(new Markup("[yellow]La habilidad aún está en enfriamiento.[/]/n"));
+        return;
+    }
+
+    var direcciones=new Dictionary<ConsoleKey,(int dx,int dy)>
+    {
+        {ConsoleKey.D1,(-1,0)},//arriba
+        {ConsoleKey.D2,(1,0)},//abajo
+        {ConsoleKey.D3,(0,-1)},//izquierda
+        {ConsoleKey.D4,(0,1)}//derecha
+    };
         Console.WriteLine("Elige la dirección para colocar la trampa de tuberías rotas:");
         Console.WriteLine("[1] Arriba");
         Console.WriteLine("[2] Abajo");
         Console.WriteLine("[3] Izquierda");
         Console.WriteLine("[4] Derecha");
 
-        bool opcionValida = false;
-
-        while (!opcionValida)
+        var key=Console.ReadKey(true).Key;
+        if(direcciones.TryGetValue(key,out var direccion))
         {
-            var key = Console.ReadKey(true).Key;
+        var nuevaPosicion = (x: jugador.Posicion.x + direccion.dx , y: jugador.Posicion.y + direccion.dy);
 
-            switch (key)
-            {
-                case ConsoleKey.D1:
-                    dx = -1;
-                    dy = 0;
-                    opcionValida = true;
-                    break;
-                case ConsoleKey.D2:
-                    dx = 1;
-                    dy = 0;
-                    opcionValida = true;
-                    break;
-                case ConsoleKey.D3:
-                    dx = 0;
-                    dy = -1;
-                    opcionValida = true;
-                    break;
-                case ConsoleKey.D4:
-                    dx = 0;
-                    dy = 1;
-                    opcionValida = true;
-                    break;
-                default:
-                    Console.WriteLine("Opción no válida. Intenta de nuevo.");
-                    break; // Permitir al jugador volver a escoger sin mostrar el menú nuevamente
-            }
-        }
-
-        var nuevaPosicion = (x: jugador.Posicion.x + dx, y: jugador.Posicion.y + dy);
-
-        // Verificar que haya al menos dos posiciones disponibles
-        var direccionesPosibles = new List<(int dx, int dy)> { (-1, 0), (1, 0), (0, -1), (0, 1) };
-        int posicionesDisponibles = 0;
-
-        foreach (var (dxPosible, dyPosible) in direccionesPosibles)
-        {
-            var posicionPosible = (x: jugador.Posicion.x + dxPosible, y: jugador.Posicion.y + dyPosible);
-
-            if (posicionPosible.x >= 0 && posicionPosible.x < Laberinto.GetLength(0) &&
-                posicionPosible.y >= 0 && posicionPosible.y < Laberinto.GetLength(1) &&
-                Laberinto[posicionPosible.x, posicionPosible.y] == Casilla.Free &&
-                posicionPosible != (0, 1))
-            {
-                posicionesDisponibles++;
-            }
-        }
-
-        if (posicionesDisponibles < 2)
-        {
-            AnsiConsole.Write(new Markup("[red]No hay suficientes posiciones disponibles para colocar la trampa.[/]\n"));
-            return;
-        }
-
-        // Verificar que la nueva posición esté dentro del rango del laberinto, sea una casilla libre y no sea la casilla de inicio
         if (nuevaPosicion.x >= 0 && nuevaPosicion.x < Laberinto.GetLength(0) && 
             nuevaPosicion.y >= 0 && nuevaPosicion.y < Laberinto.GetLength(1) && 
             Laberinto[nuevaPosicion.x, nuevaPosicion.y] == Casilla.Free && 
@@ -315,14 +271,12 @@ void Sabotaje(Personaje jugador)
             {
                 // Activar la trampa inmediatamente si hay un jugador en la nueva posición
                 AnsiConsole.Write(new Markup($"[red]¡{jugadorEnCasilla.Nombre} ha caído en la trampa de tuberías rotas![/]\n"));
-                Laberinto[nuevaPosicion.x, nuevaPosicion.y] = Casilla.BrokenPipes;
-                Thread.Sleep(2000);
 
                 // Aplicar efecto de la trampa al jugador afectado
                 if (jugadorEnCasilla.PosicionesAnteriores.Count == 4)
                 {
                     jugadorEnCasilla.Posicion = jugadorEnCasilla.PosicionesAnteriores.Dequeue();
-                    AnsiConsole.Write(new Markup("[red]El agua te ha llevado 5 casillas hacia atrás por donde habías venido.[/]\n"));
+                    AnsiConsole.Write(new Markup("[red]El agua te ha llevado hacia donde estabas hace 4 turnos.[/]\n"));
                     Thread.Sleep(2000);
                 }
                 else
@@ -340,20 +294,19 @@ void Sabotaje(Personaje jugador)
             {
                 // Colocar la trampa en la nueva posición si no hay jugador
                 Laberinto[nuevaPosicion.x, nuevaPosicion.y] = Casilla.BrokenPipes;
-                AnsiConsole.Write(new Markup("[green]¡Sabotaje exitoso! Has colocado una trampa de tuberías rotas.[/]\n"));
+                AnsiConsole.Write(new Markup("[green]¡Sabotaje exitoso! Has roto una tubería.[/]\n"));
                 Thread.Sleep(2000);
             }
+            jugador.HabilidadDisponible=false;
+            jugador.TiempoEnfriamiento=10;
+            return;
 
-            break; // Salir del bucle una vez que se ha colocado la trampa con éxito
         }
         else
         {
             Console.WriteLine("[red]No puedes colocar la trampa fuera del rango del laberinto, en una casilla que no sea libre o en la casilla de inicio.[/]");
         }
     }
-
-    jugador.HabilidadDisponible = false;
-    jugador.TiempoEnfriamiento = 4; // Ajustar el tiempo de enfriamiento según la habilidad
 }
 
         // Método para manejar la activación inmediata de trampas en el inicio
@@ -365,7 +318,7 @@ void Sabotaje(Personaje jugador)
             if (jugador.PosicionesAnteriores.Count == 4)
             {
                 jugador.Posicion = jugador.PosicionesAnteriores.Dequeue();
-                AnsiConsole.Write(new Markup("[red]El agua te ha llevado 5 casillas hacia atrás por donde habías venido.[/]\n"));
+                AnsiConsole.Write(new Markup("[red]El agua te ha llevado hacia donde estabas hace 4 turnos.[/]\n"));
                 Thread.Sleep(2000);
             }
             else
@@ -387,9 +340,9 @@ void Sabotaje(Personaje jugador)
             var casillasLibresEnRadio = new List<(int x, int y)>();
 
             // Buscar casillas libres en un radio de 7 casillas
-            for (int i = Math.Max(0, jugador.Posicion.x - 7); i <= Math.Min(filas - 1, jugador.Posicion.x + 7); i++)
+            for (int i = Math.Max(0, jugador.Posicion.x - 5); i <= Math.Min(filas - 1, jugador.Posicion.x + 5); i++)
             {
-                for (int j = Math.Max(0, jugador.Posicion.y - 7); j <= Math.Min(columnas - 1, jugador.Posicion.y + 7); j++)
+                for (int j = Math.Max(0, jugador.Posicion.y - 5); j <= Math.Min(columnas - 1, jugador.Posicion.y + 5); j++)
                 {
                     // Solo considerar las casillas libres y que no sean la misma en la que está el jugador
                     if (Laberinto[i, j] == Casilla.Free && (i != jugador.Posicion.x || j != jugador.Posicion.y))
@@ -422,6 +375,12 @@ void Sabotaje(Personaje jugador)
         // Método para la habilidad Envenenar del químico
         void Envenenar(Personaje jugador)
         {
+            if(!jugador.HabilidadDisponible)
+        {
+            AnsiConsole.Write(new Markup("[yellow]La habilidad aún está en enfriamiento.[/]/n"));
+            return;
+        }
+
             var jugadoresEnMismaCasilla = Jugadores.Where(j => j != jugador && j.Posicion == jugador.Posicion).ToList();
 
             if (jugadoresEnMismaCasilla.Count == 0)
@@ -437,13 +396,11 @@ void Sabotaje(Personaje jugador)
                     Thread.Sleep(2000);
                     otroJugador.Posicion = (0, 1); // Regresar al inicio
 
-                    // Verificar si hay una trampa de tuberías rotas en la posición inicial
-                    if (Laberinto[0, 1] == Casilla.BrokenPipes)
-                    {
-                        ActivarTrampaInicio(otroJugador);
-                    }
                 }
             }
+
+            jugador.HabilidadDisponible=false;
+            jugador.TiempoEnfriamiento = 9;
         }
 
         // Método para la habilidad Robar la llave del director
@@ -511,8 +468,12 @@ void Sabotaje(Personaje jugador)
         // Método para la habilidad Boo del monstruo radioactivo
 void Boo(Personaje jugador)
 {
-    while (true)
+        if(!jugador.HabilidadDisponible)
     {
+        AnsiConsole.Write(new Markup("[yellow]La habilidad aún está en enfriamiento.[/]/n"));
+        return;
+    }
+
         Console.WriteLine("Elige el jugador al que quieres aparecer:");
         for (int i = 0; i < Jugadores.Count; i++)
         {
@@ -522,25 +483,18 @@ void Boo(Personaje jugador)
             }
         }
 
-        bool opcionValida = false;
-
-        while (!opcionValida)
-        {
             if (int.TryParse(Console.ReadLine(), out int eleccion) && eleccion > 0 && eleccion <= Jugadores.Count && Jugadores[eleccion - 1] != jugador)
             {
                 jugador.Posicion = Jugadores[eleccion - 1].Posicion;
                 AnsiConsole.Write(new Markup($"[green]¡{jugador.Nombre} ha aparecido en la casilla de {Jugadores[eleccion - 1].Nombre}![/]\n"));
                 Thread.Sleep(2000);
-                opcionValida = true;
             }
             else
             {
                 Console.WriteLine("Selección no válida. Intenta de nuevo.");
             }
-        }
-
-        if (opcionValida) break;
-    }
+    jugador.HabilidadDisponible=false;
+    jugador.TiempoEnfriamiento=12;
 }
 
 // Método para la habilidad de curación del médico
@@ -588,7 +542,7 @@ bool Mover(Personaje jugador, int dx, int dy)
                     }
                     else
                     {
-                        MostrarMensaje("[yellow]Ya tienes una llave, esta casilla se considera libre.[/]");
+                        MostrarMensaje("[yellow]Ya tienes una llave..[/]");
                     }
                 }
                 jugador.PosicionesAnteriores.Enqueue(jugador.Posicion); // Guardar la posición anterior
@@ -616,7 +570,7 @@ bool Mover(Personaje jugador, int dx, int dy)
                     if (jugador.PosicionesAnteriores.Count == 4)
                     {
                         jugador.Posicion = jugador.PosicionesAnteriores.Dequeue();
-                        MostrarMensaje("[red]El agua te ha llevado 5 casillas hacia atrás por donde habías venido.[/]");
+                        MostrarMensaje("[red]El agua te ha llevado hacia donde estabas hace 4 turnos.[/]");
                     }
                     else
                     {
@@ -659,7 +613,7 @@ bool Mover(Personaje jugador, int dx, int dy)
                             break;
                         case Casilla.Fire:
                             jugador.Posicion = (nuevoY, nuevoX);
-                            MostrarMensaje("[red]Se ha incendiado la habitación y te han llevado a un lugar seguro.[/]");
+                            MostrarMensaje("[red]Se ha incendiado la habitación y has vuelto al inicio.[/]");
                             jugador.Posicion = (0, 1); // Volver a la posición inicial
                             Laberinto[nuevoY, nuevoX] = Casilla.Free; // Desactivar trampa
 
@@ -748,22 +702,22 @@ public static void PrintMaze(Casilla[,] laberinto, List<Personaje> jugadores)
                 switch (laberinto[i, j])
                 {
                     case Casilla.Walls:
-                        AnsiConsole.Markup("[yellow]■[/]"); // Paredes
+                        AnsiConsole.Markup("[white]■[/]"); // Paredes
                         break;
                     case Casilla.Free:
                         AnsiConsole.Markup("[black]■[/]"); // Camino
                         break;
                     case Casilla.BrokenPipes:
-                        AnsiConsole.Markup("[blue]■[/]"); // Tuberías rotas
+                        AnsiConsole.Markup("[blue]▲[/]"); // Tuberías rotas
                         break;
                     case Casilla.Debris:
-                        AnsiConsole.Markup("[red]■[/]"); // Escombros
+                        AnsiConsole.Markup("[red]▲[/]"); // Escombros
                         break;
                     case Casilla.Fire:
-                        AnsiConsole.Markup("[magenta]■[/]"); // Fuego
+                        AnsiConsole.Markup("[magenta]▲[/]"); // Fuego
                         break;
                     case Casilla.Llave:
-                        AnsiConsole.Markup("[green]■[/]"); // Llave
+                        AnsiConsole.Markup("[green]▲[/]"); // Llave
                         break;
                 }
             }

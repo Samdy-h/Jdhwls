@@ -9,11 +9,18 @@ partial class Maze
     Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
     MostrarMenuPrincipal();
 }
+static void MostrarHistoria()
+{
+    CenterText("En una planta de energía termonuclear, algo ha fallado y está a punto de explotar.");
+    CenterText("Si quieres salvarte, tendrás que conseguir la llave de la salida.");
+    CenterText("¿Podrás?");
+}
 
 static void MostrarMenuPrincipal()
 {
     string asciiArt = FiggleFonts.Standard.Render("MazeBoom");
     CenterText(asciiArt);
+    MostrarHistoria();
 
     // Mostrar opciones de menú
     CenterText("Elige una opción:");
@@ -63,10 +70,27 @@ static void CenterText(string text)
     }
 }
 
+static void MostrarInstrucciones()
+{
+    CenterText("Instrucciones del Juego:");
+    CenterText("- Evita las trampas y recoge las llaves para ganar.");
+    CenterText("- El número de jugador que eres,es tu personaje");
+    CenterText("- Cada personaje tiene habilidades únicas, úsalas sabiamente.");
+    CenterText("- Encuentra una llave para poder salir.");
+    Console.WriteLine("Leyenda de Colores:");
+    AnsiConsole.Markup("[white]■[/] Paredes\n");
+    AnsiConsole.Markup("[black]■[/] Camino\n");
+    AnsiConsole.Markup("[blue]▲[/] Tuberías rotas\n");
+    AnsiConsole.Markup("[red]▲[/] Escombros\n");
+    AnsiConsole.Markup("[magenta]▲[/] Fuego\n");
+    AnsiConsole.Markup("[green]▲[/] Llave\n");
+}
+
     public static void IniciarJuego()
     {
-        int ancho = 33;
-        int altura = 33;
+        MostrarInstrucciones();
+        int ancho = 15;
+        int altura = 15;
 
         // Definir el laberinto aquí
         Casilla[,] laberinto = GetMaze(ancho, altura);
@@ -75,7 +99,7 @@ static void CenterText(string text)
         var personajesSeleccionados = SeleccionarPersonajes(jugadores);
 
         // Asignar llaves según la cantidad de jugadores después de crear el laberinto
-        ConseguirLlaves(laberinto, personajesSeleccionados.Count, 32, 31);
+        ConseguirLlaves(laberinto, personajesSeleccionados.Count, 14, 13);
 
         AsignarPosicionesIniciales(personajesSeleccionados, laberinto);
 
