@@ -74,8 +74,9 @@ static void MostrarInstrucciones()
 {
     CenterText("Instrucciones del Juego:");
     CenterText("- Evita las trampas y recoge las llaves para ganar.");
-    CenterText("- El número de jugador que eres,es tu personaje");
+    CenterText("- El número de jugador que eres,es tu personaje en el laberinto");
     CenterText("- Cada personaje tiene habilidades únicas, úsalas sabiamente.");
+    CenterText("-Si usas la habilidad cuando no está disponible perderás el turno.");
     CenterText("- Encuentra una llave para poder salir.");
     Console.WriteLine("Leyenda de Colores:");
     AnsiConsole.Markup("[white]■[/] Paredes\n");
@@ -244,10 +245,10 @@ static void MostrarInstrucciones()
     {
         return new List<Personaje>
         {
-            new Personaje { Nombre = "Físico", Habilidad = "Teletransporte", ExplicacionHabilidad = "Mueve al jugador a una casilla libre aleatoria en un radio de 7 casillas", TiempoEnfriamiento = 7, Velocidad = 1 },
+            new Personaje { Nombre = "Físico", Habilidad = "Teletransporte", ExplicacionHabilidad = "Mueve al jugador a una casilla libre aleatoria en un radio de 5 casillas", TiempoEnfriamiento = 5, Velocidad = 1 },
             new Personaje { Nombre = "Químico", Habilidad = "Envenenar", ExplicacionHabilidad = "Envenena a los jugadores que están en la misma casilla donde el jugador activó la habilidad, enviándolo de vuelta al inicio", TiempoEnfriamiento = 9, Velocidad = 1 },
             new Personaje { Nombre = "Director", Habilidad = "Robar la llave", ExplicacionHabilidad = "Roba la llave de un jugador en la misma casilla,si él no tiene una llave cuando la roba se queda con ella,si ya tiene una llave cuando roba otra esta aparece en una casilla libre aleatoria  ", TiempoEnfriamiento = 8, Velocidad = 1 },
-            new Personaje { Nombre = "Ingeniero", Habilidad = "Sabotaje", ExplicacionHabilidad = "Coloca una trampa de tuberias rotas en una de las casillas libres a su alrededor,tiene que tener al menos dos opciones donde ponerla y nunca se puede poner en el inicio", TiempoEnfriamiento = 10, Velocidad = 1 },
+            new Personaje { Nombre = "Ingeniero", Habilidad = "Sabotaje", ExplicacionHabilidad = "Coloca una trampa de tuberias rotas en una de las casillas libres a su alrededor y nunca se puede poner en el inicio", TiempoEnfriamiento = 10, Velocidad = 1 },
             new Personaje { Nombre = "Médico", Habilidad = "Curación", ExplicacionHabilidad = "Proporciona inmunidad a trampas durante 3 turnos,si el jugador activa la habilidad y pasa por una casilla con trampa en el próximo turno ya no hace efecto", TiempoEnfriamiento = 15, Velocidad = 1 },
             new Personaje { Nombre = "Monstruo Radioactivo", Habilidad = "Boo", ExplicacionHabilidad = "Permite aparecer en la casilla de cualquier otro jugador", TiempoEnfriamiento = 12, Velocidad = 1 },
         };
